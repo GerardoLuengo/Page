@@ -371,23 +371,48 @@ grid-template-columns:1fr 1fr;
 gap:70px;
 align-items:center;
 }
+<!-- ========================= -->
+<!-- REEMPLAZAR SOLO ESTA PARTE -->
+<!-- BUSCA: .artist-image -->
+<!-- ========================= -->
 
 .artist-image{
-position:relative;
 height:650px;
 border-radius:30px;
-overflow:hidden;
 background:
-linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop') center/cover;
-filter:contrast(1.15) saturate(.8) sepia(.2);
+linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.55)),
+url('assets/klypze-artist-red.jpg') center/cover;
+filter:
+contrast(1.2)
+saturate(.95)
+brightness(.85);
+position:relative;
+overflow:hidden;
 }
 
 .artist-image::after{
 content:'';
 position:absolute;
 inset:0;
-background:linear-gradient(transparent, rgba(201,164,85,.12));
+background:
+radial-gradient(circle at center,
+rgba(200,20,15,.18),
+transparent 60%);
+mix-blend-mode:screen;
+pointer-events:none;
+}
+
+.artist-image::before{
+content:'';
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+to top,
+rgba(6,6,9,.85),
+transparent 40%
+);
+pointer-events:none;
 }
 
 .artist h2{
@@ -912,42 +937,34 @@ Cuando la pista deja de escuchar música y comienza a sentir transformación.
 
 <div class="artist-image reveal"></div>
 
+<!-- ========================= -->
+<!-- OPCIONAL — MEJORAR EL TEXTO -->
+<!-- REEMPLAZAR EL BLOQUE DEL ARTISTA -->
+<!-- ========================= -->
+
 <div class="reveal">
 
 <h2>EL ARTISTA</h2>
 
 <p>
-Klypze no nace desde un personaje.
-Nace desde un proceso real de transformación personal.
-Cada sesión está diseñada para mover emocionalmente una pista completa a través de tensión, liberación y renacimiento.
-</p>
+Klypze nace desde la tensión entre oscuridad y transformación.
+Una identidad construida para convertir emoción, presión y energía
+en experiencias sonoras cinematográficas.
 
-<br>
-
-<p>
-Imagina cada noche siendo exactamente el set que la pista necesitaba.
-Una experiencia sincronizada con iluminación DMX, láseres, strobes y narrativa musical cinematográfica.
-</p>
-
-<br>
-
-<p>
-Desde Melodic Techno hasta Peak Time, Power Techno y House,
-cada transición está pensada para crear memoria emocional.
-Los artistas que dejan huella no improvisan energía:
-la diseñan.
+Cada transición existe para empujar la pista hacia un nuevo estado:
+más profundo, más intenso y más humano.
 </p>
 
 <div class="genre-pills">
 
 <div class="genre">Melodic Techno</div>
-<div class="genre">Power Techno</div>
 <div class="genre">Peak Time</div>
+<div class="genre">Power Techno</div>
+<div class="genre">Organic House</div>
+<div class="genre">Afro House</div>
 <div class="genre">Tech House</div>
-<div class="genre">House</div>
-<div class="genre">80s Classics</div>
-<div class="genre">Britpop</div>
-<div class="genre">Reggaeton</div>
+
+</div>
 
 </div>
 
