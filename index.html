@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KLYPZE — Eclipse Experience</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--bg:#060609;
+--layer1:#0a0a0f;
+--layer2:#0f0f16;
+--layer3:#141420;
+
+--gold:#C9A455;
+--red:#C8150F;
+
+--text:#F0EDE8;
+--muted:#9A9590;
+--dark:#545058;
+
+--transition:cubic-bezier(0.22,1,0.36,1);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+font-family:'Barlow',sans-serif;
+overflow-x:hidden;
+line-height:1.6;
+position:relative;
+}
+
+/* STARS */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 15% 20%, rgba(255,255,255,0.12) 0 1px, transparent 1px),
+radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
+radial-gradient(circle at 30% 70%, rgba(255,255,255,0.10) 0 1px, transparent 1px),
+radial-gradient(circle at 65% 80%, rgba(255,255,255,0.09) 0 1px, transparent 1px),
+radial-gradient(circle at 90% 15%, rgba(255,255,255,0.12) 0 1px, transparent 1px);
+background-size:300px 300px;
+pointer-events:none;
+opacity:.5;
+z-index:-10;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+width:3px;
+}
+
+::-webkit-scrollbar-track{
+background:#000;
+}
+
+::-webkit-scrollbar-thumb{
+background:var(--gold);
+}
+
+/* TYPO */
+
+h1,h2,h3,h4{
+font-family:'Bebas Neue',sans-serif;
+letter-spacing:2px;
+font-weight:400;
+}
+
+.quote{
+font-family:'Cormorant Garamond',serif;
+font-style:italic;
+}
+
+section{
+padding:120px 8%;
+position:relative;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+}
+
+p{
+color:var(--muted);
+font-size:1rem;
+font-weight:300;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+padding:22px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:1000;
+transition:.5s var(--transition);
+background:transparent;
+backdrop-filter:blur(0px);
+}
+
+nav.scrolled{
+background:rgba(6,6,9,.92);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+font-family:'Bebas Neue';
+font-size:1.8rem;
+letter-spacing:3px;
+}
+
+.nav-links{
+display:flex;
+gap:40px;
+}
+
+.nav-links a{
+font-size:.95rem;
+color:var(--muted);
+transition:.3s;
+}
+
+.nav-links a:hover{
+color:var(--text);
+}
+
+.cta-red{
+background:var(--red);
+padding:14px 26px;
+border-radius:100px;
+color:white;
+font-size:.9rem;
+letter-spacing:1px;
+text-transform:uppercase;
+transition:.4s;
+border:1px solid transparent;
+}
+
+.cta-red:hover{
+background:transparent;
+border-color:var(--red);
+color:var(--red);
+}
+
+/* ECLIPSE */
+
+.eclipse{
+position:relative;
+border-radius:50%;
+overflow:visible;
+}
+
+.eclipse.large{
+width:140px;
+height:140px;
+margin:auto;
+animation:coronaPulse 4s infinite ease-in-out;
+}
+
+.eclipse.small{
+width:22px;
+height:22px;
+}
+
+.eclipse::before{
+content:'';
+position:absolute;
+inset:0;
+border-radius:50%;
+background:radial-gradient(circle,var(--gold),transparent 70%);
+filter:blur(10px);
+opacity:.9;
+animation:coronaPulse 4s infinite;
+}
+
+.eclipse::after{
+content:'';
+position:absolute;
+width:78%;
+height:78%;
+background:#050505;
+border-radius:50%;
+top:10%;
+left:22%;
+box-shadow:-10px 0 30px rgba(0,0,0,.9);
+}
+
+.corona-side{
+position:absolute;
+width:160%;
+height:160%;
+left:-30%;
+top:-30%;
+border-radius:50%;
+background:
+radial-gradient(circle at 35% 50%, rgba(201,164,85,.55), transparent 40%);
+filter:blur(18px);
+opacity:.7;
+pointer-events:none;
+}
+
+/* HERO */
+
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:'';
+position:absolute;
+width:900px;
+height:900px;
+background:
+radial-gradient(circle, rgba(201,164,85,.08), transparent 45%),
+radial-gradient(circle, rgba(200,20,15,.08), transparent 60%);
+animation:heroGlow 8s infinite alternate;
+}
+
+.hero-inner{
+position:relative;
+z-index:3;
+max-width:1000px;
+}
+
+.hero h1{
+font-size:9rem;
+line-height:.9;
+margin-top:45px;
+}
+
+.hero .subtitle{
+font-size:1.7rem;
+margin-top:35px;
+color:var(--text);
+max-width:900px;
+margin-inline:auto;
+}
+
+.hero p{
+margin-top:25px;
+font-size:1.1rem;
+max-width:760px;
+margin-inline:auto;
+}
+
+.hero-actions{
+margin-top:45px;
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.btn-outline{
+padding:14px 28px;
+border:1px solid var(--gold);
+color:var(--gold);
+border-radius:100px;
+transition:.4s;
+text-transform:uppercase;
+font-size:.9rem;
+letter-spacing:1px;
+}
+
+.btn-outline:hover{
+background:var(--gold);
+color:#000;
+}
+
+/* MANIFESTO */
+
+.manifesto{
+background:linear-gradient(to bottom,var(--bg),var(--layer1));
+}
+
+.section-title{
+font-size:4rem;
+margin-bottom:20px;
+}
+
+.big-quote{
+font-size:3rem;
+max-width:1100px;
+margin-bottom:70px;
+color:var(--gold);
+}
+
+.pillars{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.pillar{
+background:var(--layer2);
+padding:40px;
+border:1px solid rgba(255,255,255,.05);
+border-radius:24px;
+transition:.5s;
+}
+
+.pillar:hover{
+transform:translateY(-8px);
+border-color:rgba(201,164,85,.25);
+}
+
+.pillar svg{
+width:44px;
+height:44px;
+stroke:var(--gold);
+margin-bottom:25px;
+}
+
+.pillar h3{
+font-size:2rem;
+margin-bottom:15px;
+color:var(--gold);
+}
+
+/* ARTIST */
+
+.artist{
+background:var(--layer1);
+}
+
+.artist-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:70px;
+align-items:center;
+}
+
+.artist-image{
+position:relative;
+height:650px;
+border-radius:30px;
+overflow:hidden;
+background:
+linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop') center/cover;
+filter:contrast(1.15) saturate(.8) sepia(.2);
+}
+
+.artist-image::after{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(transparent, rgba(201,164,85,.12));
+}
+
+.artist h2{
+font-size:5rem;
+margin-bottom:25px;
+}
+
+.genre-pills{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+margin-top:35px;
+}
+
+.genre{
+padding:10px 18px;
+border:1px solid rgba(201,164,85,.3);
+border-radius:100px;
+font-size:.85rem;
+color:var(--gold);
+}
+
+/* DJ SETS */
+
+.dj{
+background:var(--layer2);
+}
+
+.journey{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:20px;
+margin:70px 0;
+}
+
+.step{
+padding:28px;
+background:rgba(255,255,255,.02);
+border-left:2px solid var(--red);
+border-radius:20px;
+}
+
+.step span{
+color:var(--red);
+font-size:.8rem;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+.step h4{
+font-size:1.7rem;
+margin-top:10px;
+}
+
+.services{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:28px;
+margin-top:50px;
+}
+
+.service-card{
+background:var(--layer3);
+padding:38px;
+border-radius:26px;
+border:1px solid rgba(255,255,255,.04);
+transition:.5s;
+}
+
+.service-card:hover{
+transform:translateY(-10px);
+border-color:rgba(200,20,15,.3);
+}
+
+.service-card svg{
+width:44px;
+height:44px;
+stroke:var(--red);
+margin-bottom:24px;
+}
+
+.service-card h3{
+font-size:2rem;
+color:var(--red);
+margin-bottom:15px;
+}
+
+/* SOFTWARE */
+
+.software{
+background:linear-gradient(to bottom,var(--layer2),var(--bg));
+}
+
+.badge{
+display:inline-block;
+padding:8px 14px;
+border-radius:100px;
+border:1px solid rgba(201,164,85,.3);
+color:var(--gold);
+font-size:.8rem;
+letter-spacing:1px;
+margin-bottom:20px;
+}
+
+.software h2{
+font-size:5rem;
+color:var(--gold);
+}
+
+.tagline{
+font-size:1.4rem;
+margin-top:10px;
+max-width:800px;
+}
+
+.features{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:22px;
+margin-top:60px;
+}
+
+.feature{
+background:var(--layer1);
+padding:32px;
+border-radius:24px;
+border:1px solid rgba(201,164,85,.08);
+}
+
+.feature svg{
+width:42px;
+height:42px;
+stroke:var(--gold);
+margin-bottom:20px;
+}
+
+.feature h4{
+font-size:1.6rem;
+margin-bottom:10px;
+color:var(--gold);
+}
+
+.software-actions{
+margin-top:45px;
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+}
+
+/* STORE */
+
+.store{
+background:var(--layer1);
+}
+
+.pack-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:28px;
+margin-top:60px;
+}
+
+.pack{
+padding:45px;
+border-radius:30px;
+background:var(--layer2);
+border:1px solid rgba(255,255,255,.04);
+position:relative;
+overflow:hidden;
+}
+
+.pack.featured{
+border-color:rgba(201,164,85,.35);
+transform:scale(1.03);
+}
+
+.pack.featured::before{
+content:'FEATURED';
+position:absolute;
+top:20px;
+right:-35px;
+background:var(--gold);
+color:#000;
+padding:8px 40px;
+font-size:.75rem;
+transform:rotate(35deg);
+letter-spacing:1px;
+}
+
+.pack h3{
+font-size:2.2rem;
+}
+
+.price{
+font-size:4rem;
+margin:25px 0;
+font-family:'Bebas Neue';
+}
+
+.pack ul{
+list-style:none;
+margin-bottom:30px;
+}
+
+.pack ul li{
+margin-bottom:12px;
+color:var(--muted);
+}
+
+/* CONTACT */
+
+.contact{
+background:
+linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.85)),
+url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop') center/cover fixed;
+}
+
+.contact-banner{
+padding:70px;
+border-radius:36px;
+background:rgba(10,10,15,.85);
+border:1px solid rgba(255,255,255,.05);
+backdrop-filter:blur(12px);
+}
+
+.contact-banner h2{
+font-size:5rem;
+max-width:900px;
+line-height:.9;
+}
+
+.contact-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+margin-top:60px;
+}
+
+.socials{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.social-link{
+padding:18px 22px;
+background:rgba(255,255,255,.03);
+border-radius:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+transition:.4s;
+}
+
+.social-link:hover{
+transform:translateX(10px);
+border:1px solid rgba(200,20,15,.2);
+}
+
+form{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+input,textarea{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.08);
+padding:18px;
+border-radius:18px;
+color:var(--text);
+font-family:'Barlow';
+font-size:1rem;
+outline:none;
+transition:.3s;
+}
+
+input:focus,textarea:focus{
+border-color:var(--gold);
+}
+
+textarea{
+min-height:180px;
+resize:none;
+}
+
+.feedback{
+margin-top:15px;
+color:var(--gold);
+opacity:0;
+transition:.4s;
+}
+
+/* FOOTER */
+
+footer{
+padding:50px 8%;
+border-top:1px solid rgba(255,255,255,.05);
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:20px;
+background:var(--bg);
+}
+
+/* REVEAL */
+
+.reveal{
+opacity:0;
+transform:translateY(40px);
+transition:1.2s var(--transition);
+}
+
+.reveal.active{
+opacity:1;
+transform:none;
+}
+
+/* ANIMATIONS */
+
+@keyframes coronaPulse{
+0%,100%{
+transform:scale(1);
+filter:drop-shadow(0 0 20px rgba(201,164,85,.4));
+}
+50%{
+transform:scale(1.04);
+filter:drop-shadow(0 0 40px rgba(201,164,85,.7));
+}
+}
+
+@keyframes heroGlow{
+0%{
+transform:translateY(-20px);
+opacity:.7;
+}
+100%{
+transform:translateY(20px);
+opacity:1;
+}
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+nav{
+padding:20px 6%;
+}
+
+.nav-links{
+display:none;
+}
+
+.hero h1{
+font-size:5rem;
+}
+
+.big-quote{
+font-size:2rem;
+}
+
+.artist-grid,
+.contact-grid,
+pillars,
+.features,
+.pack-grid,
+.services,
+.journey{
+grid-template-columns:1fr !important;
+}
+
+.pillars,
+.features,
+.pack-grid,
+.services,
+.journey{
+display:grid;
+}
+
+.artist-image{
+height:420px;
+}
+
+.contact-banner h2,
+.software h2,
+.artist h2{
+font-size:3.2rem;
+}
+
+.section-title{
+font-size:3rem;
+}
+
+.hero-actions{
+flex-direction:column;
+align-items:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav id="navbar">
+
+<div class="logo">
+<div class="eclipse small">
+<div class="corona-side"></div>
+</div>
+KLYPZE
+</div>
+
+<div class="nav-links">
+<a href="#manifesto">Manifesto</a>
+<a href="#artist">Artista</a>
+<a href="#sets">DJ Sets</a>
+<a href="#software">Software</a>
+<a href="#store">Music Store</a>
+<a href="#contact">Booking</a>
+</div>
+
+<a href="#contact" class="cta-red">Reservar fecha</a>
+
+</nav>
+
+<section class="hero">
+
+<div class="hero-inner reveal">
+
+<div class="eclipse large">
+<div class="corona-side"></div>
+</div>
+
+<h1>KLYPZE</h1>
+
+<div class="subtitle quote">
+“Muchas veces se dice que se vive y se muere una vez,
+pero yo creo que eso es falso.
+Se vive cada día de nuestra vida y se muere una sola vez.”
+</div>
+
+<p>
+Un viaje cinematográfico entre oscuridad, tensión y renacimiento.
+Melodic Techno y experiencias sensoriales construidas en tiempo real.
+Sin mezclas pregrabadas. Sin automatización emocional.
+Solo narrativa, energía y transformación.
+</p>
+
+<div class="hero-actions">
+<a href="#contact" class="cta-red">Reserva tu fecha</a>
+<a href="#software" class="btn-outline">Quiero acceso anticipado</a>
+</div>
+
+</div>
+
+</section>
+
+<section class="manifesto" id="manifesto">
+
+<div class="container">
+
+<h2 class="section-title reveal">MANIFIESTO</h2>
+
+<div class="big-quote quote reveal">
+El eclipse nunca elimina la luz.
+Solo crea el instante perfecto para redescubrirla.
+</div>
+
+<div class="pillars">
+
+<div class="pillar reveal">
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<circle cx="12" cy="12" r="8"/>
+<path d="M12 4v16"/>
+</svg>
+<h3>Oscuridad</h3>
+<p>
+El punto de partida honesto. Donde nace la identidad real.
+Cada set comienza en la tensión emocional correcta.
+</p>
+</div>
+
+<div class="pillar reveal">
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<path d="M4 12h16"/>
+<path d="M12 4v16"/>
+<circle cx="12" cy="12" r="3"/>
+</svg>
+<h3>Tensión</h3>
+<p>
+El momento hipnótico antes de la ruptura.
+Frecuencias, atmósferas y progresión narrativa controlada.
+</p>
+</div>
+
+<div class="pillar reveal">
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<path d="M5 19L19 5"/>
+<circle cx="12" cy="12" r="8"/>
+</svg>
+<h3>Renacimiento</h3>
+<p>
+La liberación emocional.
+Cuando la pista deja de escuchar música y comienza a sentir transformación.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="artist" id="artist">
+
+<div class="container artist-grid">
+
+<div class="artist-image reveal"></div>
+
+<div class="reveal">
+
+<h2>EL ARTISTA</h2>
+
+<p>
+Klypze no nace desde un personaje.
+Nace desde un proceso real de transformación personal.
+Cada sesión está diseñada para mover emocionalmente una pista completa a través de tensión, liberación y renacimiento.
+</p>
+
+<br>
+
+<p>
+Imagina cada noche siendo exactamente el set que la pista necesitaba.
+Una experiencia sincronizada con iluminación DMX, láseres, strobes y narrativa musical cinematográfica.
+</p>
+
+<br>
+
+<p>
+Desde Melodic Techno hasta Peak Time, Power Techno y House,
+cada transición está pensada para crear memoria emocional.
+Los artistas que dejan huella no improvisan energía:
+la diseñan.
+</p>
+
+<div class="genre-pills">
+
+<div class="genre">Melodic Techno</div>
+<div class="genre">Power Techno</div>
+<div class="genre">Peak Time</div>
+<div class="genre">Tech House</div>
+<div class="genre">House</div>
+<div class="genre">80s Classics</div>
+<div class="genre">Britpop</div>
+<div class="genre">Reggaeton</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="dj" id="sets">
+
+<div class="container">
+
+<h2 class="section-title reveal">DJ SETS</h2>
+
+<p class="reveal">
+Cada show sigue una arquitectura emocional diseñada para mantener a la pista en un estado constante de anticipación.
+</p>
+
+<div class="journey">
+
+<div class="step reveal">
+<span>01</span>
+<h4>Oscuridad</h4>
+<p>Ambientes profundos y frecuencias hipnóticas.</p>
+</div>
+
+<div class="step reveal">
+<span>02</span>
+<h4>Tensión</h4>
+<p>Construcción progresiva y energía contenida.</p>
+</div>
+
+<div class="step reveal">
+<span>03</span>
+<h4>Ruptura</h4>
+<p>El impacto físico del drop correcto.</p>
+</div>
+
+<div class="step reveal">
+<span>04</span>
+<h4>Liberación</h4>
+<p>Movimiento colectivo y conexión emocional.</p>
+</div>
+
+<div class="step reveal">
+<span>05</span>
+<h4>Renacimiento</h4>
+<p>La sensación de haber vivido algo irrepetible.</p>
+</div>
+
+</div>
+
+<div class="services">
+
+<div class="service-card reveal">
+
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<circle cx="12" cy="12" r="8"/>
+<path d="M12 8v8"/>
+</svg>
+
+<h3>Live Narrative Sets</h3>
+
+<p>
+Sets completamente en vivo.
+Cero mezclas pregrabadas.
+Cada transición responde a la energía real de la pista.
+</p>
+
+</div>
+
+<div class="service-card reveal">
+
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<path d="M4 12h16"/>
+<path d="M6 6l12 12"/>
+</svg>
+
+<h3>Visual Show Sync</h3>
+
+<p>
+Iluminación DMX, láseres, strobes y escenas sincronizadas para convertir el evento en una experiencia audiovisual completa.
+</p>
+
+</div>
+
+<div class="service-card reveal">
+
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<circle cx="12" cy="12" r="8"/>
+<path d="M8 12h8"/>
+</svg>
+
+<h3>Custom Curation</h3>
+
+<p>
+Curación musical personalizada según el público, narrativa del evento y energía deseada para la experiencia.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="software" id="software">
+
+<div class="container">
+
+<div class="badge reveal">EN DESARROLLO</div>
+
+<h2 class="reveal">KLYPZEDJTOOLS</h2>
+
+<p class="tagline reveal">
+Deja de perder tiempo buscando tracks.
+Empieza a dominar tu librería musical con análisis inteligente y organización total.
+</p>
+
+<div class="features">
+
+<div class="feature reveal">
+
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<path d="M12 3v18"/>
+<circle cx="12" cy="12" r="7"/>
+</svg>
+
+<h4>Energy Analysis</h4>
+
+<p>
+Clasificación energética avanzada para construir sets narrativos con precisión emocional.
+</p>
+
+</div>
+
+<div class="feature reveal">
+
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<path d="M4 12h16"/>
+<circle cx="12" cy="12" r="5"/>
+</svg>
+
+<h4>Key Detection</h4>
+
+<p>
+Detección automática de tonalidades para mezclas más armónicas y fluidas.
+</p>
+
+</div>
+
+<div class="feature reveal">
+
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<path d="M6 18L18 6"/>
+<circle cx="12" cy="12" r="8"/>
+</svg>
+
+<h4>BPM Mapping</h4>
+
+<p>
+Mapeo automático de BPM y estructura rítmica para acelerar el workflow del DJ moderno.
+</p>
+
+</div>
+
+<div class="feature reveal">
+
+<svg fill="none" viewBox="0 0 24 24" stroke-width="1.3">
+<path d="M5 12h14"/>
+<path d="M12 5v14"/>
+</svg>
+
+<h4>Library Control</h4>
+
+<p>
+Organización inteligente de metadata, tags y estructura completa de tu colección musical.
+</p>
+
+</div>
+
+</div>
+
+<div class="software-actions reveal">
+<a href="#" class="btn-outline">Quiero acceso anticipado</a>
+<a href="#contact" class="btn-outline">Solicitar demo privada</a>
+</div>
+
+</div>
+
+</section>
+
+<section class="store" id="store">
+
+<div class="container">
+
+<h2 class="section-title reveal">MUSIC STORE</h2>
+
+<p class="reveal">
+Los DJs que marcan tendencia no improvisan —
+tienen las tracks correctas antes que el resto.
+</p>
+
+<div class="pack-grid">
+
+<div class="pack reveal">
+
+<h3>Techno Core</h3>
+
+<div class="price">USD 19</div>
+
+<ul>
+<li>50 tracks curadas</li>
+<li>Melodic & Peak Time</li>
+<li>BPM organizados</li>
+<li>Listo para Rekordbox</li>
+</ul>
+
+<a href="#" class="cta-red">Comprar pack</a>
+
+</div>
+
+<div class="pack featured reveal">
+
+<h3>House & Tech</h3>
+
+<div class="price">USD 24</div>
+
+<ul>
+<li>60 tracks premium</li>
+<li>House + Tech House</li>
+<li>Curación energética</li>
+<li>Ideal para clubes</li>
+</ul>
+
+<a href="#" class="btn-outline">Quiero este pack</a>
+
+</div>
+
+<div class="pack reveal">
+
+<h3>Full Range</h3>
+
+<div class="price">USD 29</div>
+
+<ul>
+<li>80 tracks seleccionadas</li>
+<li>Multigénero inteligente</li>
+<li>Workflow optimizado</li>
+<li>Máxima versatilidad</li>
+</ul>
+
+<a href="#" class="cta-red">Descargar ahora</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="contact" id="contact">
+
+<div class="container">
+
+<div class="contact-banner reveal">
+
+<h2>
+CONSTRUYAMOS
+UNA EXPERIENCIA
+QUE LA PISTA
+NO OLVIDE
+</h2>
+
+<div class="contact-grid">
+
+<div class="socials">
+
+<a class="social-link" href="https://wa.me/56900000000">
+<span>WhatsApp</span>
+<span>Chile</span>
+</a>
+
+<a class="social-link" href="#">
+<span>Instagram</span>
+<span>@klypze</span>
+</a>
+
+<a class="social-link" href="mailto:contacto@klypze.com">
+<span>Email</span>
+<span>contacto@klypze.com</span>
+</a>
+
+</div>
+
+<form id="contactForm">
+
+<input type="text" placeholder="Nombre" required>
+<input type="email" placeholder="Email" required>
+<input type="text" placeholder="Tipo de evento">
+<textarea placeholder="Cuéntame sobre tu proyecto o evento"></textarea>
+
+<button type="submit" class="cta-red" style="border:none;cursor:pointer;">
+Enviar solicitud
+</button>
+
+<div class="feedback" id="feedback">
+Solicitud enviada correctamente.
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="logo">
+<div class="eclipse small">
+<div class="corona-side"></div>
+</div>
+KLYPZE
+</div>
+
+<p>
+© 2026 Klypze — Eclipse Experience. Todos los derechos reservados.
+</p>
+
+<div style="display:flex;gap:20px;">
+<a href="#">Instagram</a>
+<a href="#">Spotify</a>
+<a href="#">Booking</a>
+</div>
+
+</footer>
+
+<script>
+
+/* NAV */
+
+const nav = document.getElementById('navbar');
+
+window.addEventListener('scroll', () => {
+if(window.scrollY > 40){
+nav.classList.add('scrolled');
+}else{
+nav.classList.remove('scrolled');
+}
+});
+
+/* REVEAL */
+
+const reveals = document.querySelectorAll('.reveal');
+
+const observer = new IntersectionObserver((entries)=>{
+entries.forEach((entry,index)=>{
+if(entry.isIntersecting){
+setTimeout(()=>{
+entry.target.classList.add('active');
+}, index * 120);
+}
+});
+},{
+threshold:0.12
+});
+
+reveals.forEach(el=>observer.observe(el));
+
+/* PARALLAX */
+
+window.addEventListener('scroll',()=>{
+const hero = document.querySelector('.hero-inner');
+const y = window.scrollY * 0.12;
+hero.style.transform = `translateY(${y}px)`;
+});
+
+/* FORM */
+
+const form = document.getElementById('contactForm');
+const feedback = document.getElementById('feedback');
+
+form.addEventListener('submit', (e)=>{
+e.preventDefault();
+
+feedback.style.opacity = '1';
+
+setTimeout(()=>{
+feedback.style.opacity = '0';
+form.reset();
+},3000);
+});
+
+</script>
+
+</body>
+</html>
